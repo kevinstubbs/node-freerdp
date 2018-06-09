@@ -339,7 +339,9 @@ int tfreerdp_run(thread_data* data)
 
   channels = instance->context->channels;
 
-  freerdp_connect(instance);
+  if (!freerdp_connect(instance)) {
+    return 0;
+  }
 
   while (1)
   {
@@ -412,8 +414,6 @@ int tfreerdp_run(thread_data* data)
 
   free(nc->generatorContext);
 
-  freerdp_channels_close(channels, instance);
-  freerdp_channels_free(channels);
   freerdp_free(instance);
 
   return 0;
